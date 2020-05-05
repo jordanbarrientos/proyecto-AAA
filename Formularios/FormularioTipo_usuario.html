@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Proyecto aaa</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <script type="text/javascript">
+    function guardarDatos() {
+      var descripcion = document.getElementById("descripcion").value;
+      var activo = document.getElementById("activo").value;
+
+      var mensaje; var url = "../Servicios Insert/InsertTipoUsuario.php?descripcion=" + descripcion + "&activo=" + activo;
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) { Mensaje = value["Mensaje"]; });
+        alert(Mensaje);
+      });
+      document.getElementById("descripcion").value = "";
+      document.getElementById("activo").value = "";
+
+
+      ReporteFormulario();
+    }
+
+  </script>
+
+
+</head>
+
+<body onload="ReporteFormulario();">
+
+
+
+  <!--Navbar -->
+  <nav
+    class="mb-1 navbar navbar-expand-lg nav blue-gradient py-4 mb-md-0 mb-4 font-weight-bold z-depth-1 navbar-dark default-color">
+    <a class="navbar-brand" href="#"> <img src="img\aaa logo.png" height="30" alt="aaa logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto" id="menu">
+
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+
+  <!--TITULO -->
+
+
+  <div class="jumbotron jumbotron-fluid"
+    style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="container">
+      <div class="text-white text-center">
+        <div>
+          <h2 class="card-title h1-responsivefont-bold">
+            <strong>Tipo Usuario</strong></h2>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="container" style="margin-top:10px">
+
+          <div class="md-form">
+            <i class="fas fa-book prefix"></i>
+            <input type="text" id="descripcion" placeholder="Descripción" name="descripcion" class="form-control validate">
+            <label for="inputValidationEx" data-error="invalido" data-success="correcto"
+              id="descripcion"></label>
+          </div>
+          <div class="md-form">
+            <i class="fas fa-list prefix"></i>
+            <label for="inputIconEx1">Activo</label>
+            <br><br>
+            <select class="browser-default custom-select custom-select-md mb-3" id="activo" name="activo">
+              <option value="0">Inactivo</option>
+              <option value="1">Activo</option>
+            </select>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              Editar Registro
+            </button>
+            <div class="dropdown-menu" style="padding: 10%;">
+              <form id="form_niv">
+                <input class="form-control" placeholder="buscar por ID" id="IdBuscar" type="search" required>
+                <br>
+                <button class="btn btn-primary" type="button" onclick="Buscar()">Buscar</button>
+              </form>
+            </div>
+          </div>
+
+          <button type="button" class="btn aqua-gradient btn-lg mr-1" id="boton-guardar"
+            onclick="guardarDatos();">Enviar <i class="fas fa-magic ml-1"></i></button>
+          <button type="button" class="btn peach-gradient btn-lg ml-1" id="boton-actualizar"
+            onclick="Actualizar();">Actualizar <i class="fas fa-pencil-alt ml-1"></i></button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table" id="Reporte">
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+
+
+
+    <hr class="my-4">
+
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Derechos Reservados:
+      <a href="" target="_blank">aaa</a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+
+
+  <!-- SCRIPTS -->
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script src="js//ActualizarTipoUsuario.js" charset="utf-8"></script>
+  <script src="js/IdTipoUsuario.js" charset="utf-8"></script>
+  <script src="js/MenuDinamico.js"></script>
+  <script src="js/ValidarPermisos.js" charset="utf-8"></script>
+  <script src="js/SinPermisos.js"></script>
+</body>
+
+</html>

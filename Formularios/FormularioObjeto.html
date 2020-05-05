@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Formulario Objeto</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
+  <script type="text/javascript">
+
+    function guardarDatos() {
+
+      $.ajaxSetup({
+
+        async : false
+
+      });
+
+      var Descripcion = document.getElementById("Descripcion").value;
+      var Ruta = document.getElementById("Ruta").value;
+      var activo = document.getElementById("Activo").value;
+
+      if (Descripcion === "" || Ruta === "") {
+
+        alert("Todos los campos son obligatorios");
+
+        return false;
+
+      } else {
+
+        var Mensaje;
+        var url = "../Servicios Insert/InsertObjeto.php?Descripcion=" + Descripcion
+                                                      + "&Ruta=" + Ruta
+                                                      + "&Activo=" + Activo;
+        $.getJSON(url, function (data) {
+          $.each(data, function (key, value) { Mensaje = value["Mensaje"]; });
+          alert(Mensaje);
+        });
+
+        document.getElementById("Descripcion").value = "";
+        document.getElementById("Ruta").value = "";
+        document.getElementById("Activo").value = "";
+      }
+
+      ReporteFormulario ();
+
+    }
+
+  </script>
+
+</head>
+
+<body onload="ReporteFormulario();">
+  <!--Navbar -->
+  <nav
+    class="mb-1 navbar navbar-expand-lg nav blue-gradient py-4 mb-md-0 mb-4 font-weight-bold z-depth-1 navbar-dark default-color">
+    <a class="navbar-brand" href="#"> <img src="img\aaa logo.png" height="30" alt="aaa logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto" id="menu">
+
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+
+  <div class="jumbotron jumbotron-fluid"
+    style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="container">
+      <div class="text-white text-center">
+        <div>
+          <h2 class="card-title h1-responsivefont-bold">
+            <strong>Objeto</strong></h2>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid" style="margin-top:10px">
+          <form>
+            <div class="md-form">
+              <i class="fas fa-pencil-alt prefix"></i>
+              <input type="text" name="Descripcion" id="Descripcion" placeholder="Descripción" class="form-control validate" onKeyUp="check_val('Descripcion')">
+              <label id="groserias" for="Descripcion" data-error="invalido" data-success="correcto"></label>
+            </div>
+
+            <div class="md-form">
+              <i class="fas fa-map-marker-alt prefix"></i>
+              <input type="text" name="Ruta" id="Ruta" placeholder="Ruta" class="form-control validate" onKeyUp="check_val('Ruta')">
+              <label id="groserias" for="Ruta" data-error="invalido" data-success="correcto"></label>
+            </div>
+            <div class="md-form">
+              <i class="fas fa-toggle-on prefix"></i>
+              <label for="Activo">Activo</label>
+              <br><br>
+              <select class="browser-default custom-select custom-select-md mb-3" name="Activo" id="Activo">
+                <option value="0">Inactivo</option>
+                <option value="1">Activo</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              Editar Registro
+            </button>
+            <div class="dropdown-menu" style="padding: 10%;">
+              <form id="form_niv">
+                <input class="form-control" placeholder="buscar por ID" id="IdBuscar" type="search" required>
+                <br>
+                <button class="btn btn-primary" type="button" onclick="Buscar()">Buscar</button>
+              </form>
+            </div>
+          </div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn aqua-gradient btn-lg mr-1" id="boton-guardar"
+            onclick="guardarDatos();">Enviar <i class="fas fa-magic ml-1"></i></button>
+          <button type="button" class="btn peach-gradient btn-lg ml-1" id="boton-actualizar"
+            onclick="Actualizar();">Actualizar <i class="fas fa-pencil-alt ml-1"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+          <table class="table" id= "Reporte">
+
+
+          </table>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+
+
+
+    <hr class="my-4">
+
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Derechos Reservados:
+      <a href="" target="_blank">aaa</a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+
+  <!-- SCRIPTS -->
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript" src="js/groserias.js"></script>
+  <script src="js/ActualizarObjeto.js" charset="utf-8"></script>
+  <script src="js/IdObjeto.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="js/MenuDinamico.js"></script>
+<script src="js/ValidarPermisos.js" charset="utf-8"></script>
+<script src="js/SinPermisos.js" charset="utf-8"></script>
+</body>
+
+</html>

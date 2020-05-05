@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Formulario Usuario</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <script type="text/javascript">
+
+    function guardarDatos() {
+
+      $.ajaxSetup({
+
+        async: false
+
+      });
+
+      var nombre_usuario = document.getElementById("nombre_usuario").value;
+      var identidad = document.getElementById("identidad").value;
+      var nombre = document.getElementById("nombre").value;
+      var hoja_de_vida = document.getElementById("hoja_de_vida").value;
+      var fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
+      var correo_electronico = document.getElementById("correo_electronico").value;
+      var sexo = document.getElementById("sexo").value;
+      var expectativa_salarial = document.getElementById("expectativa_salarial").value;
+      var contrasena = document.getElementById("contrasena").value;
+      var expresion = /\w+@\w+\.+[a-z]/;
+
+      if (nombre_usuario === "" || identidad === "" || nombre === "" ||
+        hoja_de_vida === "" || fecha_nacimiento === "" || correo_electronico === "" ||
+        sexo === "" || expectativa_salarial === "") {
+
+
+
+        return false;
+
+
+      } else if (!expresion.test(correo_electronico)) {
+
+        alert("Correo no valido");
+
+        return false;
+
+      } else {
+        var Mensaje;
+        var url = "../Servicios Insert/InsertUsuario.php?nombre_usuario=" + nombre_usuario
+          + "&identidad=" + identidad
+          + "&nombre=" + nombre
+          + "&hoja_de_vida=" + hoja_de_vida
+          + "&fecha_nacimiento= " + fecha_nacimiento
+          + "&correo_electronico=" + correo_electronico
+          + "&sexo= " + sexo
+          + "&expectativa_salarial=" + expectativa_salarial
+          + "&Tipo_de_usuario=1"
+          + "&contrasena=" + contrasena;
+        $.getJSON(url, function (data) {
+          $.each(data, function (key, value) {
+            Mensaje = value["Mensaje"];
+          });
+          alert(Mensaje);
+          window.location = 'FormularioEducacion.html?nombre_usuario=' + nombre_usuario;
+        });
+        document.getElementById("nombre_usuario").value = "";
+        document.getElementById("identidad").value = "";
+        document.getElementById("nombre").value = "";
+        document.getElementById("hoja_de_vida").value = "";
+        document.getElementById("fecha_nacimiento").value = "";
+        document.getElementById("correo_electronico").value = "";
+        document.getElementById("sexo").value = "";
+        document.getElementById("expectativa_salarial").value = "";
+        document.getElementById("contrasena").value = "";
+
+      }
+
+
+
+    }
+    setTimeout("guardarDatos()", 5000)
+
+
+  </script>
+
+</head>
+
+<body>
+  <!--Navbar -->
+  <nav
+    class="mb-1 navbar navbar-expand-lg nav blue-gradient py-4 mb-md-0 mb-4 font-weight-bold z-depth-1 navbar-dark default-color">
+    <a class="navbar-brand" href="#"> <img src="img\aaa logo.png" height="30" alt="aaa logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto" id="menu">
+
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+
+  <!--TITULO -->
+  <div class="jumbotron jumbotron-fluid"
+    style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="container">
+      <div class="text-white text-center">
+        <div>
+          <h2 class="card-title h1-responsivefont-bold">
+            <strong>Usuario</strong></h2>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid" style="margin-top:10px">
+          <form>
+            <div class="md-form">
+              <i class="fas fa-user-circle prefix"></i>
+              <input type="text" name="nombre_usuario" id="nombre_usuario" class="form-control validate"
+                onKeyUp="check_val('nombre_usuario')">
+              <label id="groserias" for="nombre_usuario" data-error="invalido" data-success="correcto">Nombre
+                Usuario</label>
+            </div>
+            <div class="md-form">
+              <i class="fas fa-user prefix"></i>
+              <input type="text" name="identidad" id="identidad" class="form-control validate"
+                onKeyUp="check_val('identidad')">
+              <label id="groserias" for="identidad" data-error="invalido" data-success="correcto">Identidad</label>
+            </div>
+            <div class="md-form">
+              <i class="fas fa-pencil-alt prefix"></i>
+              <input type="text" name="nombre" id="nombre" class="form-control validate" onKeyUp="check_val('nombre')">
+              <label id="groserias" for="nombre" data-error="invalido" data-success="correcto">Nombre</label>
+            </div>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" name="hoja_de_vida" id="hoja_de_vida"
+                  accept="application/pdf">
+                <label class="custom-file-label" for="inputGroupFile01">Elegir hoja de vida</label>
+              </div>
+              <br><br>
+            </div>
+            <div class="md-form">
+              <i class="fas fa-calendar-alt prefix"></i>
+              <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control validate">
+              <label for="fecha_nacimiento" data-error="invalido" data-success="correcto">Fecha de Nacimiento</label>
+              <div class="md-form">
+                <i class="fas fa-envelope prefix"></i>
+                <input type="email" name="correo_electronico" id="correo_electronico" class="form-control validate"
+                  onKeyUp="check_val(correo_electronico)">
+                <label id="groserias" for="correo_electronico" data-error="invalido" data-success="correcto">Correo
+                  Electronico:</label>
+              </div>
+              <div class="md-form">
+                <i class="fas fa-venus prefix"></i>
+                <label for="sexo">Sexo</label>
+                <br><br>
+                <select class="browser-default custom-select custom-select-md mb-3" name="sexo" id="sexo">
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                </select>
+              </div>
+              <div class="md-form">
+                <i class="fas fa-money-check-alt prefix"></i>
+                <input type="number" name="expectativa_salarial" id="expectativa_salarial"
+                  class="form-control validate">
+                <label for="expectativa_salarial" data-error="invalido" data-success="correcto">Expectativa
+                  Salarial</label>
+              </div>
+              <div class="md-form">
+                <i class="fas fa-key prefix"></i>
+                <input type="password" name="contrasena" id="contrasena" class="form-control validate">
+                <label for="contrasena" data-error="invalido" data-success="correcto">Contraseña</label>
+              </div>
+            </div>
+            <!-- Button trigger modal -->
+            <div class="text-center">
+            <button type="button" class="btn aqua-gradient btn-lg mr-1" id="boton-guardar"
+              onclick="guardarDatos();">Enviar <i class="fas fa-magic ml-1"></i></button>
+            </div>
+            <div class="text-center">
+            <a href="InicioSesion.html" class="btn aqua-gradient btn-lg mr-1" >Volver a inicio<i class="fas fa-magic ml-1"></i></a>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Footer-->
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+
+
+
+    <hr class="my-4">
+
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Derechos Reservados:
+      <a href="" target="_blank">aaa</a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+
+  <!-- SCRIPTS -->
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
+  <script type="text/javascript" src="js/groserias.js"></script>
+
+  <script src="js/ActualizarUsuario.js" charset="utf-8"></script>
+  <script src="js/IdUsuario.js" charset="utf-8"></script>
+  <script src="js/MenuDinamico.js"></script>
+
+</body>
+
+</html>

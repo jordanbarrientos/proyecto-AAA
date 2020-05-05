@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Proyecto aaa</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
+
+
+  <script type="text/javascript">
+    function guardarDatos() {
+      $.ajaxSetup({
+
+        async: false
+
+      });
+
+      var id_herramientas = document.getElementById("id_herramientas").value;
+      var urlParams=new URLSearchParams(window.location.search);
+      var nombre_usuario= urlParams.get('nombre_usuario');
+
+      var id_nivel = document.getElementById("id_nivel").value;
+
+      var Mensaje;
+      var url = "../Servicios Insert/InsertHerramientas_Usuario.php?id_herramientas=" + id_herramientas + "&nombre_usuario=" +nombre_usuario+ "&id_nivel=" + id_nivel;
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) { Mensaje = value["Mensaje"]; });
+        alert(Mensaje);
+      });
+      document.getElementById("id_herramientas").value = "";
+      document.getElementById("id_nivel").value = "";
+
+      ReporteFormulario();
+    }
+    function CargarDatos() {
+
+      $.ajaxSetup({
+        async: false
+
+      });
+      var url = "../Servicios Select All/SelectAllHerramientas.php";
+      var html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+          if (value["activo"] == '1') {
+
+          html = html + "<option value='" + value["id_herramientas"] + "' >" + value["descripcion"] + "</option>";
+          }
+
+        });
+
+        document.getElementById("id_herramientas").innerHTML = "";
+        document.getElementById("id_herramientas").innerHTML = html;
+
+      });
+
+      var url2 = "../Servicios Select All/SelectAllNivel.php";
+      var html2 = "";
+
+      $.getJSON(url2, function (data) {
+        $.each(data, function (key, value) {
+
+          if (value["Tipo_Nivel"] == '2') {
+            html2 = html2 + "<option value='" + value["id_nivel"] + "' >" + value["nombre"] + "</option>";
+          }
+
+        });
+
+        document.getElementById("id_nivel").innerHTML = "";
+        document.getElementById("id_nivel").innerHTML = html2;
+
+      });
+    }
+
+
+
+  </script>
+
+</head>
+
+<body onload="CargarDatos(),ReporteFormulario();">
+
+  <!--Navbar -->
+  <nav
+    class="mb-1 navbar navbar-expand-lg nav blue-gradient py-4 mb-md-0 mb-4 font-weight-bold z-depth-1 navbar-dark default-color">
+    <a class="navbar-brand" href="#"> <img src="img\aaa logo.png" height="30" alt="aaa logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto" id="menu">
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="jumbotron jumbotron-fluid"
+    style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="container">
+      <div class="text-white text-center">
+        <div>
+          <h2 class="card-title h1-responsivefont-bold">
+            <strong>Herramientas Usuarios</strong></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="container" style="margin-top:10px">
+
+          <div class="md-form">
+            <i class="fas fa-list prefix"></i>
+            <label for="id_herramientas">Herramientas</label>
+            <br><br>
+            <select class="browser-default custom-select custom-select-md mb-3" name="id_herramientas"
+              id="id_herramientas">
+            </select>
+          </div>
+
+
+
+
+          <div class="md-form">
+            <i class="fas fa-list prefix"></i>
+            <label for="id_nivel">Nivel</label>
+            <br><br>
+            <select class="browser-default custom-select custom-select-md mb-3" name="id_nivel" id="id_nivel">
+
+            </select>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              Editar Registro
+            </button>
+            <div class="dropdown-menu" style="padding: 10%;">
+              <form id="form_niv">
+                <input class="form-control" placeholder="buscar por ID" id="IdBuscar" type="search" required>
+                <br>
+                <button class="btn btn-primary" type="button" onclick="Buscar()">Buscar</button>
+              </form>
+            </div>
+          </div>
+
+          <button type="button" class="btn aqua-gradient btn-lg mr-1" id="boton-guardar"
+          onclick="guardarDatos();">Enviar <i class="fas fa-magic ml-1"></i></button>
+        <button type="button" class="btn peach-gradient btn-lg ml-1" id="boton-actualizar"
+          onclick="Actualizar();">Actualizar <i class="fas fa-pencil-alt ml-1"></i></button>
+
+          </form>
+        </div>
+
+      </div>
+      <div class="table-responsive">
+        <table class="table" id="Reporte">
+
+        </table>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  </div>
+  </div>
+
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+    <hr class="my-4">
+    <div class="footer-copyright py-3">
+      © 2019 Derechos Reservados:
+      <a href="" target="_blank">aaa</a>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script src="js/MenuDinamico.js"></script>
+  <script src="js/IdHerramientas_de_Usuario.js"></script>
+  <script src="js/ActualizarHerramienta_Usuario.js"></script>
+  <script src="js/ValidarPermisos.js" charset="utf-8"></script>
+  <script src="js/SinPermisos.js"></script>
+</body>
+</html>

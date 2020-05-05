@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Formulario Usuario</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <script type="text/javascript">
+
+    function guardarDatos() {
+
+      $.ajaxSetup({
+
+        async: false
+
+      });
+
+      var nombre_usuario = document.getElementById("nombre_usuario").value;
+      var identidad = document.getElementById("identidad").value;
+      var nombre = document.getElementById("nombre").value;
+      var hoja_de_vida = document.getElementById("hoja_de_vida").value;
+      var fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
+      var correo_electronico = document.getElementById("correo_electronico").value;
+      var sexo = document.getElementById("sexo").value;
+      var expectativa_salarial = document.getElementById("expectativa_salarial").value;
+      var contrasena = document.getElementById("contrasena").value;
+      var expresion = /\w+@\w+\.+[a-z]/;
+
+      if (nombre_usuario === "" || identidad === "" || nombre === "" ||
+        hoja_de_vida === "" || fecha_nacimiento === "" || correo_electronico === "" ||
+        sexo === "" || expectativa_salarial === "") {
+
+
+
+        return false;
+
+
+      }
+
+      ReporteFormulario();
+
+    }
+
+
+  </script>
+
+</head>
+
+<body onload="ReporteFormulario();">
+  <!--Navbar -->
+  <nav
+    class="mb-1 navbar navbar-expand-lg nav blue-gradient py-4 mb-md-0 mb-4 font-weight-bold z-depth-1 navbar-dark default-color">
+    <a class="navbar-brand" href="#"> <img src="img\aaa logo.png" height="30" alt="aaa logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto" id="menu">
+
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+
+  <!--TITULO -->
+  <div class="jumbotron jumbotron-fluid"
+    style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="container">
+      <div class="text-white text-center">
+        <div>
+          <h2 class="card-title h1-responsivefont-bold">
+            <strong>Usuario</strong></h2>
+          <p class="mx-1 mb-1">Datos del usuario</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid" style="margin-top:10px">
+          <form>
+            <div class="md-form">
+              <i class="fas fa-user prefix"></i>
+              <input type="text" name="identidad" placeholder="Identidad" id="identidad" class="form-control validate"
+                onKeyUp="check_val('identidad')">
+              <label id="groserias" for="identidad" data-error="invalido" data-success="correcto"></label>
+            </div>
+            <div class="md-form">
+              <i class="fas fa-pencil-alt prefix"></i>
+              <input type="text" name="nombre" placeholder="Nombre" id="nombre" class="form-control validate" onKeyUp="check_val('nombre')">
+              <label id="groserias" for="nombre" data-error="invalido" data-success="correcto"></label>
+            </div>
+            <div class="md-form">
+              <i class="fas fa-calendar-alt prefix"></i>
+              <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control validate">
+              <label for="fecha_nacimiento" data-error="invalido" data-success="correcto">Fecha de Nacimiento</label>
+              <div class="md-form">
+                <i class="fas fa-envelope prefix"></i>
+                <input type="email" name="correo_electronico" placeholder="Correo Electrónico" id="correo_electronico" class="form-control validate"
+                  onKeyUp="check_val(correo_electronico)">
+                <label id="groserias" for="correo_electronico" data-error="invalido" data-success="correcto"></label>
+              </div>
+              <div class="md-form">
+                <i class="fas fa-venus prefix"></i>
+                <label for="sexo">Sexo</label>
+                <br><br>
+                <select class="browser-default custom-select custom-select-md mb-3" name="sexo" id="sexo">
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                </select>
+              </div>
+              <div class="md-form">
+                <i class="fas fa-money-check-alt prefix"></i>
+                <input type="number" placeholdername="expectativa_salarial" id="expectativa_salarial"
+                  class="form-control validate">
+                <label for="expectativa_salarial" data-error="invalido" data-success="correcto"></label>
+              </div>
+              <div class="md-form">
+                <i class="fas fa-key prefix"></i>
+                <input type="password" name="contrasena" placeholder="Contraseña" id="contrasena" class="form-control validate">
+                <label for="contrasena" data-error="invalido" data-success="correcto"></label>
+              </div>
+            </div>
+            </div>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" name="hoja_de_vida" id="hoja_de_vida"
+                  accept="application/pdf">
+                <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
+              </div>
+              <br><br>
+            </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn peach-gradient btn-lg ml-1" id="seleccionar"
+              onclick="Buscar()">Seleccionar<i class="fas fa-pencil-alt ml-1"></i></button>
+            <button type="button" class="btn peach-gradient btn-lg ml-1" id="actualizar"
+              onclick="Actualizar()">Actualizar <i class="fas fa-pencil-alt ml-1"></i></button>
+
+          </form>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table" id="Reporte">
+
+
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--Footer-->
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+
+
+
+    <hr class="my-4">
+
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Derechos Reservados:
+      <a href="" target="_blank">aaa</a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
+  <script type="text/javascript" src="js/groserias.js"></script>
+
+  <script src="js/ActualizarUsuario.js" charset="utf-8"></script>
+  <script src="js/IdUsuario.js" charset="utf-8"></script>
+
+  <script src="js/MenuDinamico.js"></script>
+
+  <script src="js/ValidarPermisos.js" charset="utf-8"></script>
+  <script src="js/SinPermisos.js"></script>
+</body>
+
+</html>

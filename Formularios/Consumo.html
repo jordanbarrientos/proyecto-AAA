@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>CONSUMO DE SERVICIO</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+
+  <script type="text/javascript">
+
+    function guardarDatos() {
+
+      $.ajaxSetup({
+
+        async: false
+
+      });
+
+      var urlParams=new URLSearchParams(window.location.search);
+      var nombre_usuario= urlParams.get('nombre_usuario');
+
+
+      var nivel_de_grado = document.getElementById("nivel_de_grado").value;
+      var fecha_de_inicio = document.getElementById("fecha_de_inicio").value;
+      var fecha_de_fin = document.getElementById("fecha_de_fin").value;
+      var id_campus = document.getElementById("id_campus").value;
+      var id_carrera = document.getElementById("id_carrera").value;
+
+      var Mensaje; var url = "../Servicios Insert/InsertEducacion.php?nombre_usuario="+nombre_usuario
+        + "&nivel_de_grado=" + nivel_de_grado
+        + "&fecha_de_inicio=" + fecha_de_inicio
+        + "&fecha_de_fin=" + fecha_de_fin
+        + "&id_campus=" + id_campus
+        + "&id_carrera=" + id_carrera;
+
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) { Mensaje = value["Mensaje"]; });
+        alert(Mensaje);
+      });
+
+
+      document.getElementById("nivel_de_grado").value = "";
+      document.getElementById("fecha_de_inicio").value = "";
+      document.getElementById("fecha_de_fin").value = "";
+      document.getElementById("id_campus").value = "";
+      document.getElementById("id_carrera").value = "";
+
+
+      ReporteFormulario();
+    }
+
+    function CargarDatos() {
+      $.ajaxSetup({
+
+        async: false
+
+      });
+
+      var url = "../Servicios Select All/SelectAllCampus.php";
+      var html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+          html = html + "<option value='" + value["id_campus"] + "' >" + value["nombre"] + "</option>";
+
+
+        });
+
+        document.getElementById("nombre").innerHTML = "";
+        document.getElementById("nombre").innerHTML = html;
+
+      });
+
+
+      url = "../Servicios Select All/SelectAllCarrera.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+          html = html + "<option value='" + value["id_carrera"] + "' >" + value["nombre_carrera"] + "</option>";
+
+        });
+
+        document.getElementById("nombre_carrera").innerHTML = "";
+        document.getElementById("nombre_carrera").innerHTML = html;
+
+      });
+
+      url = "../Servicios Select All/SelectAllNivel.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+
+          html = html + "<option value='" + value["id_nivel"] + "' >" + value["nombre"] + "</option>";
+
+        });
+
+        document.getElementById("nivel_de_idioma").innerHTML = "";
+        document.getElementById("nivel_de_idioma").innerHTML = html;
+
+      });
+
+      
+      url = "../Servicios Select All/SelectAllIdioma.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+
+          html = html + "<option value='" + value["id_idioma"] + "' >" + value["nombre_del_idioma"] + "</option>";
+
+        });
+
+        document.getElementById("nombre_del_idioma").innerHTML = "";
+        document.getElementById("nombre_del_idioma").innerHTML = html;
+
+      });
+
+
+
+      url = "../Servicios Select All/SelectAll_Area.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+
+          html = html + "<option value='" + value["id_area"] + "' >" + value["nombre_area"] + "</option>";
+
+        });
+
+        document.getElementById("nombre_area").innerHTML = "";
+        document.getElementById("nombre_area").innerHTML = html;
+
+      });
+
+
+
+      url = "../Servicios Select All/SelectAllEducacion.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+
+          html = html + "<option value='" + value["id_area"] + "' >" + value["nombre_area"] + "</option>";
+
+        });
+
+        document.getElementById("nombre_area").innerHTML = "";
+        document.getElementById("nombre_area").innerHTML = html;
+
+      });
+
+
+
+      url = "../Servicios Select All/SelectAllHerramientas.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+
+          html = html + "<option value='" + value["id_herramientas"] + "' >" + value["descripcion"] + "</option>";
+
+        });
+
+        document.getElementById("herramienta").innerHTML = "";
+        document.getElementById("herramienta").innerHTML = html;
+
+      });
+
+   
+      url = "../Servicios Select All/SelectAllNivel.php";
+      html = "";
+
+      $.getJSON(url, function (data) {
+        $.each(data, function (key, value) {
+
+
+          html = html + "<option value='" + value["id_nivel"] + "' >" + value["nombre"] + "</option>";
+
+        });
+
+        document.getElementById("nivel_herramienta").innerHTML = "";
+        document.getElementById("nivel_herramienta").innerHTML = html;
+
+      });
+
+    }
+
+
+
+  </script>
+</head>
+
+
+<body onload="CargarDatos() ;">
+
+  <!--Navbar -->
+  <nav
+    class="mb-1 navbar navbar-expand-lg nav blue-gradient py-4 mb-md-0 mb-4 font-weight-bold z-depth-1 navbar-dark default-color">
+    <a class="navbar-brand" href="#"> <img src="img\aaa logo.png" height="30" alt="aaa logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+      aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+      <ul class="navbar-nav mr-auto" id="menu">
+
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+
+  <!--TITULO -->
+
+
+  <div class="jumbotron jumbotron-fluid"
+    style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <div class="container">
+      <div class="text-white text-center">
+        <div>
+          <h2 class="card-title h1-responsivefont-bold">
+            <strong>REPORTE</strong></h2>
+          <p class="mx-1 mb-1">REPORTE</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="container" style="margin-top:10px">
+  
+            <div class="row">
+           <div class="col-md-6"> 
+             <p>Rango de Salario Inicial</p>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Lps.</span>
+              </div>
+              <input type="search" class="form-control" aria-label="Amount (to the nearest dollar) " id="salario_inici">
+              <div class="input-group-append">
+                <span class="input-group-text">.00</span>
+  
+              </div>
+            </div>
+          </div>
+        <div class="col-md-6">
+            <p>Rango de Salario Final</p>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Lps.</span>
+                </div>
+                <input type="search" class="form-control" aria-label="Amount (to the nearest dollar)" id="salario_final">
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+    
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+
+        <p>Idioma</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="nombre_del_idioma" id="nombre_del_idioma">
+        </select>
+
+        <p>Nivel de Idioma</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="nivel_de_idioma" id="nivel_de_idioma">
+        </select>
+
+        <p>Carreras</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="nombre_carrera" id="nombre_carrera">
+        </select>
+
+
+        <h4></h4>
+        <p>Campus</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="nombre" id="nombre">
+            <option>Educacion</option>
+            <option>aaa</option>
+        </select>
+
+        <p>Area de Interes</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="nombre_area" id="nombre_area">
+        </select>
+
+        
+
+        <p>Herramientas</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="descripcion" id="herramienta">
+        </select>
+
+        <p>Nivel de Herramientas</p>
+        <select class="browser-default custom-select custom-select-md mb-3" name="descripcion" id="nivel_herramienta">
+        </select>
+
+
+      <!-- <button class="btn btn-primary" type="button" style="float: right" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel" >Descargar Registros</button>   TITULO -->
+        <button class="btn btn-primary" type="button" style="float: right" onclick="Consumo()" value="" >VER PROSPECTOS</button>
+      </form>
+    </div>
+  </div>
+
+  
+
+  <table class="table-responsive table" id="testTable">
+    <tbody id="Reporte">
+    </tbody>
+</table>    
+
+ 
+
+  </div>
+</div>
+
+
+  <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
+    <hr class="my-4">
+    <div class="footer-copyright py-3">
+      © 2019 Derechos Reservados:
+      <a href="" target="_blank">aaa</a>
+    </div>
+  </footer>
+
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
+
+  <script src="js/IdEducacion.js" charset="utf-8"></script>
+  <script src="js/ActualizarEducacion.js" charset="utf-8"></script>
+  
+  <script src="js/consumo.js"></script>
+  <script src="js/ValidarPermisos.js" charset="utf-8"></script>
+  <script src="js/SinPermisos.js"></script>
+  <script src="js/MenuDinamico.js" charset="utf-8"></script>
+
+ <!--<script src="js/tableToExcel.js"></script>-->
+</body>
+
+</html>
